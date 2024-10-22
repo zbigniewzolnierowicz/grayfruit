@@ -21,7 +21,8 @@ jobs:
         shell: bash
         run: |
           cd target/release
-          7z a ../../../windows.zip grayfruit.exe
+          ls
+          7z a ../../windows.zip grayfruit.exe
           cd -
       - name: Publish release artifacts
         uses: actions/upload-artifact@v3
