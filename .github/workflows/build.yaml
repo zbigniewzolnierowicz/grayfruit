@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -9,7 +9,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -20,18 +20,11 @@ jobs:
       - name: Package as archive
         shell: bash
         run: |
-          cd target/release
-          ls
-          7z a ../../windows.zip grayfruit.exe
+          cd target/x86_64-pc-windows-msvc/release
+          7z a ../../../windows.zip grayfruit.exe
           cd -
       - name: Publish release artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: grayfruit
           path: "windows.zip"
-      - name: Publish GitHub release
-        uses: softprops/action-gh-release@v1
-        with:
-          draft: true
-          files: "windows.zip"
-
