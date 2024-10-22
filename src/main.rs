@@ -1,13 +1,6 @@
 use eframe::egui;
 use std::path::PathBuf;
-
-use clap::Parser;
 use lopdf::Document;
-
-#[derive(Parser)]
-struct Cli {
-    file: PathBuf,
-}
 
 fn generate_poem(path: &PathBuf) -> Vec<String> {
     let doc = Document::load(path).unwrap();
