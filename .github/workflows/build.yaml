@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+      - name: Build binary (Windows)
+        shell: powershell
+        run: "cargo build --release --target x86_64-pc-windows-msvc"
+      - name: Package as archive
+        shell: bash
+        run: |
+          cd target/release
+          7z a ../../../windows.zip grayfruit.exe
+          cd -
+      - name: Publish release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: grayfruit
+          path: "windows.zip"
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: "windows.zip"
+
