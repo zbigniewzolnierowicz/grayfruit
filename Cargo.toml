@@ -5,4 +5,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.20", features = ["derive"] }
+eframe = "0.29.1"
+egui = "0.29.1"
 lopdf = "0.34.0"
+rfd = "0.15.0"
